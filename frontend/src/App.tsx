@@ -9,6 +9,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState<string[]>([]);
   const [verdict, setVerdict] = useState<string>('');
+  const [showRsiWarning, setShowRsiWarning] = useState<boolean>(false);
   
   // 🌟 NEW STATE: History list initialized from browser local storage memory (filtered to allowed tickers)
   const [history, setHistory] = useState<string[]>(() => {
@@ -49,6 +50,9 @@ export default function App() {
     setLogs(["⏳ Request dispatched to broker..."]);
     setVerdict('');
 
+    // 🌟 Reset warning banner state on new execution runs
+    setShowRsiWarning(false); 
+
     const eventSource = new EventSource(`http://localhost:8000/api/analyze?ticker=${cleanTicker}`);
 
     eventSource.onmessage = (event) => {
@@ -59,6 +63,11 @@ export default function App() {
         if (payload.startsWith('__FINAL_REPORT__:')) {
           const reportContent = payload.replace('__FINAL_REPORT__:', '');
           setVerdict(reportContent);
+
+          // 🌟 If final report contains the missing token indicator string, raise flag
+          if (reportContent.includes("No RSI data retrieved.")) {
+            setShowRsiWarning(true);
+          }
           
           // 🌟 HISTORICAL LOGGER: Append successfully run items uniquely to top of history view
           setHistory((prev) => {
@@ -222,9 +231,14 @@ export default function App() {
               {logs.map((l, idx) => <div key={idx}>&gt; {l}</div>)}
             </div>
           </div>
-
           <div>
             <h4 style={{ margin: '0 0 8px 0', color: '#475569' }}>📋 Strategic Verdict Portfolio Report</h4>
+            {showRsiWarning && (
+            <div style={{ backgroundColor: '#fffbeb', borderLeft: '4px solid #d97706', color: '#b45309', padding: '12px', borderRadius: '6px', marginBottom: '12px', fontSize: '14px' }}>
+              ⚠️ <strong>Human Review Required:</strong> Missing RSI database indicators. Verify background ingestion jobs.
+            </div>
+             )}
+
             <div style={{ padding: '24px', borderRadius: '8px', border: '1px solid #e2e8f0', backgroundColor: '#ffffff', minHeight: '300px', color: '#0f172a', lineHeight: '1.7', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
               {verdict ? (
                 renderFormattedReport(verdict)

@@ -35,6 +35,7 @@ from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
+from langgraph.errors import GraphRecursionError
 
 # --- Logging Configuration ---
 logging.basicConfig(
@@ -187,10 +188,15 @@ async def main():
         "sentiment_data": ""
     }
     
-    final_output = await graph.ainvoke(initial_state)
-    
-    print("\n=== FINAL MULTI-AGENT VERDICT ===")
-    print(final_output["messages"][-1].content)
+    try:
+        # Enforce maximum execution steps configuration limits to avoid runaway cycles
+        final_output = await graph.ainvoke(initial_state, config={"recursion_limit": 15})
+        print("\n=== FINAL MULTI-AGENT VERDICT ===")
+        print(final_output["messages"][-1].content)
+    except GraphRecursionError:
+        logging.error("❌ Graph execution halted: The agent loop exceeded the safety recursion limit.")
+        print("\n=== FINAL MULTI-AGENT VERDICT ===")
+        print("FINAL ACTION: HOLD\n\n⚠️ Analysis Aborted: The system detected an infinite execution loop between sub-agents and applied safety brakes.")
 
 if __name__ == "__main__":
     asyncio.run(main())
