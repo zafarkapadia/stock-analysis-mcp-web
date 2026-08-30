@@ -1,15 +1,29 @@
 import React, { useState, useEffect } from 'react';
 
+// Explicit whitelist of allowed stock symbols
+const ALLOWED_TICKERS = ['AAPL', 'AMZN', 'GOOG', 'GOOGL', 'META', 'MSFT', 'NVDA', 'TSLA'] as const;
+type AllowedTicker = typeof ALLOWED_TICKERS[number];
+
 export default function App() {
-  const [ticker, setTicker] = useState('AAPL');
+  const [ticker, setTicker] = useState<string>('AAPL');
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState<string[]>([]);
   const [verdict, setVerdict] = useState<string>('');
   
-  // 🌟 NEW STATE: History list initialized from browser local storage memory
+  // 🌟 NEW STATE: History list initialized from browser local storage memory (filtered to allowed tickers)
   const [history, setHistory] = useState<string[]>(() => {
     const saved = localStorage.getItem('mcp_ticker_history');
-    return saved ? JSON.parse(saved) : ['AAPL', 'GOOG', 'MSFT', 'NVDA'];
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          return parsed.filter(item => ALLOWED_TICKERS.includes(item as any));
+        }
+      } catch (e) {
+        console.error("Failed to parse history", e);
+      }
+    }
+    return ['AAPL', 'GOOG', 'MSFT', 'NVDA'];
   });
 
   // Sync history array changes to local storage automatically
@@ -19,8 +33,10 @@ export default function App() {
 
   const handleRunAnalysis = (targetTicker?: string) => {
     const cleanTicker = (targetTicker || ticker).trim().toUpperCase();
-    if (!cleanTicker) {
-      alert("Please enter a valid stock symbol");
+    
+    // Safety check enforcing whitelist values explicitly
+    if (!ALLOWED_TICKERS.includes(cleanTicker as any)) {
+      alert("Selected ticker symbol is unauthorized.");
       return;
     }
 
@@ -168,14 +184,19 @@ export default function App() {
         <p style={{ color: '#64748b', marginTop: '0', marginBottom: '24px' }}>FastMCP + LangGraph Agent Pipeline Workspace Panel</p>
 
         <form onSubmit={handleFormSubmit} style={{ display: 'flex', gap: '12px', marginBottom: '24px' }}>
-          <input
-            type="text"
+          {/* Switched from text type input component to select configuration drop layer */}
+          <select
             value={ticker}
             onChange={(e) => setTicker(e.target.value)}
-            placeholder="Stock Ticker (e.g. MSFT)"
             disabled={loading}
-            style={{ padding: '12px', fontSize: '15px', borderRadius: '6px', border: '1px solid #cbd5e1', width: '220px' }}
-          />
+            style={{ padding: '12px', fontSize: '15px', borderRadius: '6px', border: '1px solid #cbd5e1', width: '220px', backgroundColor: '#ffffff', color: '#0f172a' }}
+          >
+            {ALLOWED_TICKERS.map((allowedSymbol) => (
+              <option key={allowedSymbol} value={allowedSymbol}>
+                {allowedSymbol}
+              </option>
+            ))}
+          </select>
           <button
             type="submit"
             disabled={loading}
