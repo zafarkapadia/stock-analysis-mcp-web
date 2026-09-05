@@ -85,3 +85,28 @@
 2026-08-16 10:00:34,448 [INFO] Processing [8/8]: TSLA
 2026-08-16 10:00:35,098 [INFO] Successfully wrote 5 articles for TSLA to ChromaDB.
 2026-08-16 10:00:35,099 [INFO] Multi-ticker news ingestion pipeline complete!
+2026-09-05 03:52:00,741 [INFO] Connecting to ChromaDB at '../data/chroma_db_market_news'...
+2026-09-05 03:52:00,745 [INFO] Processing [1/8]: GOOGL
+2026-09-05 03:52:02,605 [INFO] Successfully wrote 5 articles for GOOGL to ChromaDB.
+2026-09-05 03:52:02,605 [INFO] Sleeping for 5 seconds to respect API rate limits...
+2026-09-05 03:52:07,606 [INFO] Processing [2/8]: GOOG
+2026-09-05 03:52:08,976 [INFO] Successfully wrote 5 articles for GOOG to ChromaDB.
+2026-09-05 03:52:08,976 [INFO] Sleeping for 5 seconds to respect API rate limits...
+2026-09-05 03:52:13,977 [INFO] Processing [3/8]: AMZN
+2026-09-05 03:52:15,652 [INFO] Successfully wrote 5 articles for AMZN to ChromaDB.
+2026-09-05 03:52:15,653 [INFO] Sleeping for 5 seconds to respect API rate limits...
+2026-09-05 03:52:20,654 [INFO] Processing [4/8]: AAPL
+2026-09-05 03:52:22,365 [INFO] Successfully wrote 5 articles for AAPL to ChromaDB.
+2026-09-05 03:52:22,366 [INFO] Sleeping for 5 seconds to respect API rate limits...
+2026-09-05 03:52:27,368 [INFO] Processing [5/8]: META
+2026-09-05 03:52:29,022 [INFO] Successfully wrote 5 articles for META to ChromaDB.
+2026-09-05 03:52:29,022 [INFO] Sleeping for 5 seconds to respect API rate limits...
+2026-09-05 03:52:34,023 [INFO] Processing [6/8]: MSFT
+2026-09-05 03:52:35,394 [INFO] Successfully wrote 5 articles for MSFT to ChromaDB.
+2026-09-05 03:52:35,394 [INFO] Sleeping for 5 seconds to respect API rate limits...
+2026-09-05 03:52:40,395 [INFO] Processing [7/8]: NVDA
+2026-09-05 03:52:41,824 [INFO] Successfully wrote 5 articles for NVDA to ChromaDB.
+2026-09-05 03:52:41,824 [INFO] Sleeping for 5 seconds to respect API rate limits...
+2026-09-05 03:52:46,825 [INFO] Processing [8/8]: TSLA
+2026-09-05 03:52:48,195 [INFO] Successfully wrote 5 articles for TSLA to ChromaDB.
+2026-09-05 03:52:48,195 [INFO] Multi-ticker news ingestion pipeline complete!
