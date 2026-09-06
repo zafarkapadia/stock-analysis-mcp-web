@@ -12,10 +12,11 @@ This is the user interface (React UI) where the data begins and ends.
 ### 2. The Orchestration & Runtime Layer
 This layer acts as the central brain and communications broker for the agents.
 *	The Broker (backend-api.py): A FastAPI server that catches the frontend request, spins up the multi-agent engine, and captures text streams to send back to the user's screen instantly.
-*	The Multi-Agent Engine (mcp-multiagent-client-runner.py): When a user requests a stock analysis, LangGraph initializes a centralized, thread-safe dictionary called the AgentState.
- *a.	Parallel Processing: Instead of processing tasks one after the other, the graph dynamically splits into two independent tracks. The RSI Analyst Agent and the Sentiment Analyst Agent spin up concurrently in parallel execution streams.
- *b.	Separation of Concerns: Each agent is completely isolated. The RSI Analyst only cares about quantitative overbought/oversold technicals, while the Sentiment Analyst focuses strictly on news trends and risks. They do not know about each other's work, which keeps their prompt context small and highly accurate.
- *c.	Lead Portfolio Strategist (The Orchestrator Agent): Once both parallel sub-agents receive their raw data from the MCP layer, they synthesize their findings and write them back into the shared AgentState. LangGraph blocks the graph from moving forward until both sub-agents are finished. Once both variables (rsi_data and sentiment_data) are populated, the graph triggers a Join operation and passes the consolidated state to the Lead Portfolio Strategist (Orchestrator). The Strategist reviews the conflicting technical vs. fundamental forces using a Chain-of-Thought structure, balances the risks, and prints the final unified market action: BUY, SELL, or HOLD.
+*	The Multi-Agent Engine (mcp-multiagent-client-runner.py): When a user requests a stock analysis, LangGraph initializes a 
+    centralized, thread-safe dictionary called the AgentState.
+    * a.	Parallel Processing: Instead of processing tasks one after the other, the graph dynamically splits into two independent tracks. The RSI Analyst Agent and the Sentiment Analyst Agent spin up concurrently in parallel execution streams.
+    * b.	Separation of Concerns: Each agent is completely isolated. The RSI Analyst only cares about quantitative overbought/oversold technicals, while the Sentiment Analyst focuses strictly on news trends and risks. They do not know about each other's work, which keeps their prompt context small and highly accurate.
+    * c.	Lead Portfolio Strategist (The Orchestrator Agent): Once both parallel sub-agents receive their raw data from the MCP layer, they synthesize their findings and write them back into the shared AgentState. LangGraph blocks the graph from moving forward until both sub-agents are finished. Once both variables (rsi_data and sentiment_data) are populated, the graph triggers a Join operation and passes the consolidated state to the Lead Portfolio Strategist (Orchestrator). The Strategist reviews the conflicting technical vs. fundamental forces using a Chain-of-Thought structure, balances the risks, and prints the final unified market action: BUY, SELL, or HOLD.
 
 ### 3. Model Context Protocol (MCP) Layer
 
@@ -36,7 +37,7 @@ Please see the architecture and flow of the Stock Analyzer Agentic AI Applicatio
 ### 1. Clone Git Repository
 Clone the Git repository as shown below: 
 
-'git clone https://github.com/zafarkapadia/stock-analysis-mcp-web.git'
+git clone https://github.com/zafarkapadia/stock-analysis-mcp-web.git
 
 Once the repository is cloned you should see the folders below in stock-analysis-mcp-web folder.  
  
@@ -45,9 +46,9 @@ Once the repository is cloned you should see the folders below in stock-analysis
 ### 2. Backend Environment Setup (Python)
 Change into the **stock-analysis-mcp-web** directory and create your virtual environment: 
 
-'cd stock-analysis-mcp-web'
+cd stock-analysis-mcp-web
 
-'python -m venv .venvstockanalysisweb'
+python -m venv .venvstockanalysisweb
 
 Activate the virtual environment based on your operating system: 
 **•	Windows (PowerShell): ):  .\.venvstockanalysisweb\Scripts \Activate.ps1**
@@ -58,9 +59,10 @@ Locate the requirements.txt inside the **stock-analysis-mcp-web** folder.
 
 Install the dependencies:
 
-'pip install -r requirements.txt'
+pip install -r requirements.txt
 
 Note: If you run into a chroma-hnswlib compiler error on Windows, make sure you install the Visual Studio C++ Build Tools and select "Desktop development with C++" before running pip again
+
 Create your .env configuration:
 
 Create a **.env** file inside the **stock-analysis-mcp-web** folder to store your API credentials securely
@@ -71,9 +73,9 @@ OPENAI_API_KEY=your_actual_openai_api_key_here
 
 Return to your root project folder (**stock-analysis-mcp-web**)
 
-'cd frontend'
+cd frontend
 
-Install dependencies: 'npm install'
+Install dependencies: npm install
 
 ### 4. Running the Complete System
 
@@ -83,9 +85,9 @@ To launch the system, you must keep two terminal windows open simultaneously:
 
 Ensure your virtual environment is activated inside the **stock-analysis-mcp-web/** directory and run:
 
-'cd client'
+cd client
 
-'python backend-api.py'
+python backend-api.py
 
 You should see: INFO: Uvicorn running on http://0.0.0 (Press CTRL+C to quit)
 
@@ -93,9 +95,9 @@ You should see: INFO: Uvicorn running on http://0.0.0 (Press CTRL+C to quit)
 
 Navigate to the frontend/ directory and spin up your development server:
 
-'cd frontend'
+cd frontend
 
-'npm run dev'
+npm run dev
 
 You should see: ➜ Local: http://localhost:5173/
 
