@@ -37,58 +37,69 @@ Please see the architecture and flow of the Stock Analyzer Agentic AI Applicatio
 ### 1. Clone Git Repository
 Clone the Git repository as shown below: 
 
-git clone https://github.com/zafarkapadia/stock-analysis-mcp-web.git
+'git clone https://github.com/zafarkapadia/stock-analysis-mcp-web.git'
 
 Once the repository is cloned you should see the folders below in stock-analysis-mcp-web folder.  
  
  ![alt text](image-1.png)
 
 ### 2. Backend Environment Setup (Python)
-Change into the stock-analysis-mcp-web directory and create your virtual environment: 
+Change into the **stock-analysis-mcp-web** directory and create your virtual environment: 
 
-cd stock-analysis-mcp-web
-python -m venv .venvstockanalysisweb
+'cd stock-analysis-mcp-web'
+
+'python -m venv .venvstockanalysisweb'
 
 Activate the virtual environment based on your operating system: 
-•	Windows (PowerShell): ):  .\.venvstockanalysisweb\Scripts \Activate.ps1
-•	Windows (CMD):  .\.venvstockanalysisweb\Scripts\activate
+**•	Windows (PowerShell): ):  .\.venvstockanalysisweb\Scripts \Activate.ps1**
+**•	Windows (CMD):  .\.venvstockanalysisweb\Scripts\activate**
 
-Create requirements.txt
-Locate the requirements.txt inside the stock-analysis-mcp-web folder.
+
+Locate the requirements.txt inside the **stock-analysis-mcp-web** folder.
+
 Install the dependencies:
-pip install -r requirements.txt
+
+'pip install -r requirements.txt'
 
 Note: If you run into a chroma-hnswlib compiler error on Windows, make sure you install the Visual Studio C++ Build Tools and select "Desktop development with C++" before running pip again
 Create your .env configuration:
 
-Create a .env file inside the stock-analysis-mcp-web folder to store your API credentials securely
+Create a **.env** file inside the **stock-analysis-mcp-web** folder to store your API credentials securely
 
 OPENAI_API_KEY=your_actual_openai_api_key_here
 
 ### 3. Frontend Environment Setup (React & Vite)
 
-Return to your root project folder (stock-analysis-mcp-web)
-cd frontend
+Return to your root project folder (**stock-analysis-mcp-web**)
 
-Install dependencies: npm install
+'cd frontend'
+
+Install dependencies: 'npm install'
 
 ### 4. Running the Complete System
 
 To launch the system, you must keep two terminal windows open simultaneously:
 
-Terminal 1: Python FastAPI Backend
-Ensure your virtual environment is activated inside the stock-analysis-mcp-web / directory and run:
-cd client
-python backend-api.py
+**Terminal 1: Python FastAPI Backend**
+
+Ensure your virtual environment is activated inside the **stock-analysis-mcp-web/** directory and run:
+
+'cd client'
+
+'python backend-api.py'
 
 You should see: INFO: Uvicorn running on http://0.0.0 (Press CTRL+C to quit)
 
-Terminal 2: React UI Frontend
+**Terminal 2: React UI Frontend**
+
 Navigate to the frontend/ directory and spin up your development server:
-cd frontend
-npm run dev
+
+'cd frontend'
+
+'npm run dev'
 
 You should see: ➜ Local: http://localhost:5173/
+
 Run an Analysis:
 a.	Open your browser and navigate to http://localhost:5173/
 b.	Enter a stock ticker symbol (e.g., AAPL) and click Analyse Ticker.
