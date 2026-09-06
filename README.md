@@ -110,3 +110,4 @@ c.	Watch your sub-agents query your databases and stream information to the UI i
 ### 5.	Optional Cronjobs/Windows Task Scheduler Jobs
 
 If you would like to create a cronjob or Windows Task scheduler job, locate the run-ingest-rsi.bat and run-ingest-articles.bat files in the stock-analysis-mcp-web/jobs folder and create wither cronjobs or Windows Task Scheduler jobs for hourly RSI retrieval and daily news articles retrieval. You will also need an Alpha Vantage API Key added to the .env file.
+

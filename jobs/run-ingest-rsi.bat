@@ -1,6 +1,6 @@
 @echo off
 :: Navigate to your project folder
-cd /d "C:\Users\zafar\Documents\Carnegie Mellon Course\examples\stock-analysis-mcp-web\jobs"
+cd /d "<Link to Jobs folder>"
 
 :: Force Python UTF-8 environment variable to prevent emoji crashes
 set PYTHONUTF8=1
